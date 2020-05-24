@@ -1,0 +1,13 @@
+.flex {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.centered {
+	text-align: center;
+}
+
+#create {
+	width: 50%;
+	margin: 25px auto;
+}
