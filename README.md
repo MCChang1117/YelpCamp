@@ -26,11 +26,17 @@ If you have not set "nodemon" before, please see "setup_automate_server_restart.
 
 #### Package Description
 
-* body-parser package: Extract the data from server side)
-* ejs package: make a page look like html but it can also use javascript syntax)
+* body-parser package: Extract the data from server side
+* ejs package: make a page look like html but it can also use javascript syntax
 * mongoose: ODM (Object Data Mapper) > Interact the database (mongodb) within javascript file
 
-## Setup basic code for running the server (in app.js):
+### Open the database
+
+	mongod
+
+* Type the above code in a NEW git bash whose file path is set as default
+
+## 2. Setup basic code for running the server (in app.js):
 
 ### Define variables
 
@@ -59,14 +65,29 @@ If you have not set "nodemon" before, please see "setup_automate_server_restart.
 
 * e.g. for external css file
 
-### Connect to the database
+### Connect to the database and set the data format
+
+#### Connect to the database
 
 	mongoose.set('useUnifiedTopology', true);
 	mongoose.set('useNewUrlParser', true);
-	mongoose.connect("mongodb://localhost/'database'")
+	mongoose.connect("mongodb://localhost/'database'");
 
 * If you have any issues about "Deprecation Warnings", please see this [website](https://mongoosejs.com/docs/deprecations.html)
 * mongoose.set: solve the deprecation warnings (useUnifiedTopology & useNewUrlParser)
+
+#### Define a pattern for the data
+
+	var campgroundSchema = new mongoose.Schema({
+		name: String,
+		image: String
+	});
+
+#### Compile and save to the model
+
+	var Campground = mongoose.model("Campground", campgroundSchema);
+
+* Do things by using "Campground" (e.g. Campground.create();)
 
 ### listen
 
@@ -82,7 +103,7 @@ If you have not set "nodemon" before, please see "setup_automate_server_restart.
 		res.render("home");
 	});
 
-## Run the back-end server (git bash):
+## 3. Run the back-end server (git bash):
 
 ### Create the correspond homepage ejs file
 
@@ -192,16 +213,13 @@ If you have not set "nodemon" before, please see "setup_automate_server_restart.
 	
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
 
-## Define a pattern for the data
+## RESTFUL ROUTES
 
-	var catSchema = new mongoose.Schema({
-		name: String,
-		age: Number, 
-		temperament: String
-	});
+name 	| url 			| verb 	| description
+--------|---------------|-------|----------------------------------
+INDEX 	| /dogs 		| GET 	| Display a list of all dog
+NEW 	| /dogs/new 	| GET 	| Display form to make a new dog
+CREATE 	| /dogs 		| POST 	| Add new dog to DB
+SHOW 	| /dogs/:id 	| GET 	| Shows info about one dog
 
-### Compile and save to the model
-
-	var Cat = mongoose.model("Cat", catSchema);
-
-* Do things by using "Cat" (e.g. Cat.create)
+* /dogs/:id in SHOW: show the things IN PARTICULAR

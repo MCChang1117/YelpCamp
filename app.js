@@ -1,7 +1,37 @@
-var express = require("express");
-var app = express();
-var path = require("path");
-var bodyParser = require("body-parser");
+var express   	= require("express"),
+	app   		= express(),
+	path 		= require("path"),
+	bodyParser 	= require("body-parser"),
+	mongoose 	= require("mongoose");
+
+mongoose.set('useUnifiedTopology', true);
+mongoose.set('useNewUrlParser', true);
+mongoose.connect("mongodb://localhost/yelp_camp");
+
+// SCHEMA SETUP (We will put these into separate file)
+
+var campgroundSchema = new mongoose.Schema({
+	name: String,
+	image: String,
+	description: String
+});
+
+var Campground = mongoose.model("Campground", campgroundSchema);
+
+Campground.create(
+	{
+		name: "Taichung", 
+		image: "https://source.unsplash.com/2400x1600/?camp",
+		description: "It's in the middle of Taiwan"
+	}, function(err, campground){
+		if(err){
+			console.log(err);
+		} else {
+			console.log("NEWLY CREATED CAMPGROUND: ");
+			console.log(campground);
+		}
+	});
+
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -9,42 +39,62 @@ app.set("view engine", "ejs");
 // Define the location of the static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-var campgrounds = [
-	{name: "Taipei", image: "https://pixabay.com/get/52e3d5404957a514f1dc84609620367d1c3ed9e04e507440752d79d3904fc6_340.jpg"},
-	{name: "Taichung", image: "https://pixabay.com/get/55e8dc404f5aab14f1dc84609620367d1c3ed9e04e507440752d79d3904fc6_340.jpg"},
-	{name: "Hsinchu", image: "https://pixabay.com/get/57e8d0424a5bae14f1dc84609620367d1c3ed9e04e507440752d79d3904fc6_340.jpg"},
-	{name: "Tainan", image: "https://pixabay.com/get/52e8d4444255ae14f1dc84609620367d1c3ed9e04e507440752d79d3904fc6_340.jpg"},
-	{name: "Kaoshung", image: "https://pixabay.com/get/57e1dd4a4350a514f1dc84609620367d1c3ed9e04e507440752d79d3904fc6_340.jpg"},
-	{name: "Taoyuan", image: "https://pixabay.com/get/57e8d1454b56ae14f1dc84609620367d1c3ed9e04e507440752d79d3904fc6_340.jpg"},
-	{name: "Taitung", image: "https://pixabay.com/get/57e1d14a4e52ae14f1dc84609620367d1c3ed9e04e507440752d79d3904fc6_340.jpg"},
-	{name: "New Taipei", image: "https://pixabay.com/get/54e5dc474355a914f1dc84609620367d1c3ed9e04e507440752d79d3904fc6_340.jpg"},
-	{name: "E.SUN", image: "https://pixabay.com/get/57e8d1464d53a514f1dc84609620367d1c3ed9e04e507440752d79d3904fc6_340.jpg"}
+/*var campgrounds = [
+	{name: "Taipei", image: "https://source.unsplash.com/1600x900/?camp"},
+	{name: "Taichung", image: "https://source.unsplash.com/2400x1600/?camp"},
+	{name: "Hsinchu", image: "https://source.unsplash.com/1920x1458/?camp"}, 
+	{name: "Tainan", image: "https://source.unsplash.com/1600x900/?night"}, 
+	{name: "Kaoshung", image: "https://source.unsplash.com/daily"}, 
+	{name: "Taoyuan", image: "https://source.unsplash.com/user/scottagoodwill"}, 
+	{name: "Taitung", image: "https://source.unsplash.com/1920x1280/?camp"}, 
+	{name: "New Taipei", image: "https://source.unsplash.com/1600x900/?tent"},
+	{name: "E.SUN", image: "https://source.unsplash.com/1600x900/?mountain"}
 ];
-
+*/
 app.get("/", function(req, res){
 	res.render("landing");
 });
 
+// INDEX - Show all campgrounds
 app.get("/campgrounds", function(req, res){
-	res.render("campgrounds", {campgrounds: campgrounds});
+	// Get all campgrounds from DB
+	Campground.find({}, function(err, allCampgrounds){
+		if(err){
+			console.log(err);
+		} else {
+			res.render("campgrounds", {campgrounds: allCampgrounds});
+		}
+	});
 });
 
 // Use the same URL "/campgrounds" is fine since get and post are different > Convention
-// Create a new campground
+// CREATE - Add new campgrounds to DB
 app.post("/campgrounds", function(req, res){
 	// get data from form and add to campgrounds array
 	var name = req.body.name;
 	var image = req.body.image;
 	var newCampground = {name: name, image: image}
-	campgrounds.push(newCampground);
-	// redirect back to campgrounds page
-	res.redirect("/campgrounds");
+	// Create a new campground and save to DB
+	Campground.create(newCampground, function(err, newlyCreated){
+		if(err){
+			console.log(err);
+		} else {
+			// redirect back to campgrounds page
+			res.redirect("/campgrounds");
+		}
+	});
 });
 
 // "/campgrounds/new" > conventional name
-// Show the form that would send the data to the post route
+// NEW - Show the form that would send the data to the post route
 app.get("/campgrounds/new", function(req, res){
 	res.render("new");
+});
+
+app.get("/campgrounds/:id", function(req, res){
+	// find the campground with provided ID
+	// render show template with that campground
+	res.send("THIS WILL BE THE SHOW PAGE ONE DAY!");
 });
 
 app.listen(3000, function(){
