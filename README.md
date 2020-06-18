@@ -22,14 +22,18 @@ If you have not set "nodemon" before, please see "setup_automate_server_restart.
 ### Create the main javascript file and install all required packages
 
 	touch app.js
-	npm install --save express ejs body-parser request mongoose
+	npm install --save express ejs body-parser request mongoose method-override express-sanitizer
 
 #### Package Description
 
-* body-parser package: Extract the data from server side
+* body-parser package: Extract the data from server side (from form)
 * ejs package: make a page look like html but it can also use javascript syntax
 * mongoose: ODM (Object Data Mapper) > Interact the database (mongodb) within javascript file
-
+* method-override: HTTP does not support method other than POST (e.g. PUT, DELETE)
+	* a way to separete different RESTful ROUTE out
+* express-sanitizer: Sanitize the input
+	* e.g. Avoid the input of script "Alert"
+	
 ### Open the database
 
 	mongod
@@ -40,12 +44,13 @@ If you have not set "nodemon" before, please see "setup_automate_server_restart.
 
 ### Define variables
 
-	var express = require("express");
-	var app = express();
-	var bodyParser = require("body-parser");
-	var request = require("request");
-	var path = require("path");
-	var mongoose = require("mongoose");
+	var express 		= require("express");
+	var app 			= express();
+	var bodyParser 		= require("body-parser");
+	var request 		= require("request");
+	var path 			= require("path");
+	var mongoose 		= require("mongoose");
+	var methodOverride 	= require("method-override"),
 
 ### Body Parser setting
 
@@ -58,6 +63,15 @@ If you have not set "nodemon" before, please see "setup_automate_server_restart.
 	app.set("view engine", "ejs");
 
 * Function: include ejs file without typing .ejs
+
+### method-override setting
+
+	app.use(methodOverride("_method"));
+
+### express-sanitizer setting
+
+	app.use(expressSanitizer());
+* Goes after "Body Parser Setting"
 
 ### Static file path setting
 
@@ -222,4 +236,15 @@ NEW 	| /dogs/new 	| GET 	| Display form to make a new dog
 CREATE 	| /dogs 		| POST 	| Add new dog to DB
 SHOW 	| /dogs/:id 	| GET 	| Shows info about one dog
 
-* /dogs/:id in SHOW: show the things IN PARTICULAR
+* ``/dogs/:id`` in SHOW: show the things IN PARTICULAR
+* REST: a mapping between HTTP routes and CRUD
+	* CRUD:
+		- CREATE
+		- READ
+		- UPDATE
+		- DESTROY
+
+## <%= blog.body %> versus <%- blog.body %>
+
+* =: Just display the string
+* -: Evaluate and run the return as the code
