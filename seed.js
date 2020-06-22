@@ -5,17 +5,17 @@ var data = [
 	{
 		name:"Taipei",
 		image:"https://source.unsplash.com/1600x900/?camp",
-		description: "It is the capital of Taiwan"
+		description: "It is the capital of Taiwan, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 	},
 	{
 		name:"Taichung",
 		image:"https://source.unsplash.com/2400x1600/?camp",
-		description: "It is in the middle of Taiwan"
+		description: "It is in the middle of Taiwan, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 	},
 	{
 		name:"Hsinchu",
 		image:"https://source.unsplash.com/1920x1458/?camp",
-		description: "It is my hometown"
+		description: "It is my hometown, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 	},
 ]
 // remove() > deleteMany(): Because of DeprecationWarning
