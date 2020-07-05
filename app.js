@@ -15,25 +15,25 @@ var commentRoutes 		= require("./routes/comments"),
 	campgroundRoutes 	= require("./routes/campgrounds"),
 	indexRoutes 		= require("./routes/index");
 
-seedDB();
+// seedDB(); // seed the database
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useNewUrlParser', true);
 mongoose.connect("mongodb://localhost/yelp_camp");
 
 
-// Campground.create(
-// 	{
-// 		name: "Taichung", 
-// 		image: "https://source.unsplash.com/2400x1600/?camp",
-// 		description: "It's in the middle of Taiwan"
-// 	}, function(err, campground){
-// 		if(err){
-// 			console.log(err);
-// 		} else {
-// 			console.log("NEWLY CREATED CAMPGROUND: ");
-// 			console.log(campground);
-// 		}
-// 	});
+/*Campground.create(
+	{
+		name: "Taichung", 
+		image: "https://source.unsplash.com/2400x1600/?camp",
+		description: "It's in the middle of Taiwan"
+	}, function(err, campground){
+		if(err){
+			console.log(err);
+		} else {
+			console.log("NEWLY CREATED CAMPGROUND: ");
+			console.log(campground);
+		}
+	});*/
 
 
 app.use(bodyParser.urlencoded({extended: true}));
