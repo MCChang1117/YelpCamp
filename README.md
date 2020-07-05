@@ -22,7 +22,7 @@ If you have not set "nodemon" before, please see "setup_automate_server_restart.
 ### Create the main javascript file and install all required packages
 
 	touch app.js
-	npm install --save express ejs body-parser request mongoose method-override express-sanitizer
+	npm install --save express ejs body-parser request mongoose method-override express-sanitizer passport passport-local passport-local-mongoose express-session
 
 #### Package Description
 
@@ -50,7 +50,9 @@ If you have not set "nodemon" before, please see "setup_automate_server_restart.
 	var request 		= require("request");
 	var path 			= require("path");
 	var mongoose 		= require("mongoose");
-	var methodOverride 	= require("method-override"),
+	var methodOverride 	= require("method-override");
+	var passport 		= require("passport"),
+	var LocalStrategy 	= require("passport-local"),
 
 ### Body Parser setting
 
@@ -78,6 +80,19 @@ If you have not set "nodemon" before, please see "setup_automate_server_restart.
 	app.use(express.static(path.join(__dirname, 'public')));
 
 * e.g. for external css file
+
+### Passport Configuration
+
+	app.use(require("express-session")({
+		secret: "Once again Rusty wins cutest dog!",
+		resave: false,
+		saveUninitialized: false
+	}));
+	app.use(passport.initialize());
+	app.use(passport.session());
+	passport.use(new LocalStrategy(User.authenticate()));
+	passport.serializeUser(User.serializeUser());
+	passport.deserializeUser(User.deserializeUser());
 
 ### Connect to the database and set the data format
 
