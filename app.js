@@ -5,6 +5,7 @@ var express   		= require("express"),
 	mongoose 		= require("mongoose"),
 	passport 		= require("passport"),
 	LocalStrategy 	= require("passport-local"),
+	methodOverride 	= require("method-override"),
 	Campground 		= require("./models/campground"),
 	Comment 		= require("./models/comment"),
 	User 			= require("./models/user"),
@@ -41,6 +42,7 @@ app.set("view engine", "ejs");
 
 // Define the location of the static files
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride("_method"));
 
 /*var campgrounds = [
 	{name: "Taipei", image: "https://source.unsplash.com/1600x900/?camp"},
