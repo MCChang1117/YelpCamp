@@ -22,13 +22,14 @@ If you have not set "nodemon" before, please see "setup_automate_server_restart.
 ### Create the main javascript file and install all required packages
 
 	touch app.js
-	npm install --save express ejs body-parser request mongoose method-override express-sanitizer passport passport-local passport-local-mongoose express-session
+	npm install --save express ejs body-parser request mongoose method-override express-sanitizer passport passport-local passport-local-mongoose express-session connect-flash
 
 #### Package Description
 
 * body-parser package: Extract the data from server side (from form)
 * ejs package: make a page look like html but it can also use javascript syntax
 * mongoose: ODM (Object Data Mapper) > Interact the database (mongodb) within javascript file
+* connect-flash: use the flash message
 * method-override: HTTP does not support method other than POST (e.g. PUT, DELETE)
 	* a way to separete different RESTful ROUTE out
 * express-sanitizer: Sanitize the input
@@ -50,6 +51,7 @@ If you have not set "nodemon" before, please see "setup_automate_server_restart.
 	var request 		= require("request");
 	var path 			= require("path");
 	var mongoose 		= require("mongoose");
+	var flash 			= require("connect-flash");
 	var methodOverride 	= require("method-override");
 	var passport 		= require("passport"),
 	var LocalStrategy 	= require("passport-local"),
@@ -80,6 +82,10 @@ If you have not set "nodemon" before, please see "setup_automate_server_restart.
 	app.use(express.static(path.join(__dirname, 'public')));
 
 * e.g. for external css file
+
+### connect-flash setting
+
+	app.use(flash());
 
 ### Passport Configuration
 

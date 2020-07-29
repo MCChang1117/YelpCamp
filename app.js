@@ -3,6 +3,7 @@ var express   		= require("express"),
 	path 			= require("path"),
 	bodyParser 		= require("body-parser"),
 	mongoose 		= require("mongoose"),
+	flash 			= require("connect-flash"),
 	passport 		= require("passport"),
 	LocalStrategy 	= require("passport-local"),
 	methodOverride 	= require("method-override"),
@@ -43,6 +44,7 @@ app.set("view engine", "ejs");
 // Define the location of the static files
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride("_method"));
+app.use(flash());
 
 /*var campgrounds = [
 	{name: "Taipei", image: "https://source.unsplash.com/1600x900/?camp"},
@@ -69,9 +71,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// Make the variable, currectUser, available to all pages
+// Make the following variables be available to all pages
 app.use(function(req, res, next){
 	res.locals.currentUser = req.user;
+	res.locals.error = req.flash("error");
+	res.locals.success = req.flash("success");
 	next();
 });
 
