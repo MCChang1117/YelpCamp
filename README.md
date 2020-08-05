@@ -4,6 +4,26 @@
 
 If you have not set "nodemon" before, please see "setup_automate_server_restart.txt" and follow the instruction
 
+# Previous Environment Setting
+
+## Git
+
+## Sublime Text 3
+
+Click "Ctrl+Shift+p" to open Package Control and install the following useful packages
+
+### EJS 2
+
+In Preferences > Color Scheme..., Click "Dracula EJS"
+
+### MarkdownPreview
+
+In Preferences > Key Bindings, write the following code
+
+	{ "keys": ["alt+m"], "command": "markdown_preview", "args": {"target": "browser", "parser":"markdown"}  }
+
+From now on, you just need to click "Alt+m" to preview markdown in web browser
+
 # Setup a new blank project
 
 ## 1. Setup packages (git bash):
@@ -207,6 +227,8 @@ If you have not set "nodemon" before, please see "setup_automate_server_restart.
 			"name": "Lucy",
 			"breed": "Mutt"
 		});
+
+# Deploying Setting (Heroku)
 
 # Notes
 
