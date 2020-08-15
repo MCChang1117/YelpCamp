@@ -1,7 +1,7 @@
 <%- include("./partials/header")%>
 
 <h1 style="text-align: center">Sign Up</h1>
-<div style="width: 30%; margin: 25px auto;">
+<div style="width: 50%; margin: 25px auto;">
 	<form action="/register" method="POST">
 		<div class="form-group">
 			<input class="form-control" type="text" name="username" placeholder="username">
@@ -9,8 +9,22 @@
 		<div class="form-group">
 			<input class="form-control" type="password" name="password" placeholder="password">
 		</div>
+		<div class="row">
+			<div class="col-md-6 form-group">
+				<input class="form-control" type="text" name="firstName" placeholder="first name">
+			</div>
+			<div class="col-md-6 form-group">
+				<input class="form-control" type="text" name="lastName" placeholder="last name">
+			</div>
+		</div>
 		<div class="form-group">
-			<input class="form-control" type="text" name="adminCode" placeholder="Admin code (Optional)">
+			<input class="form-control" type="email" name="email" placeholder="email">
+		</div>
+		<div class="form-group">
+			<input class="form-control" type="text" name="avatar" placeholder="avatar url">
+		</div>
+		<div class="form-group">
+			<input class="form-control" type="text" name="adminCode" placeholder="admin code (Optional)">
 		</div>
 		<div class="form-group">
 			<button class="btn btn-lg btn-primary btn-block">Sign Up!</button>
