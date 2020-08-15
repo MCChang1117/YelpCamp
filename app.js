@@ -13,6 +13,7 @@ var express   		= require("express"),
 	seedDB 			= require("./seed");
 
 const PORT = process.env.PORT || 3000
+var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp"
 
 // requiring routes
 var commentRoutes 		= require("./routes/comments"),
@@ -21,23 +22,11 @@ var commentRoutes 		= require("./routes/comments"),
 
 // seedDB(); // seed the database
 
-mongoose.connect(process.env.DATABASEURL, {
+mongoose.connect(url, {
 	// The following codes are used to solve DeprecationWarning issue
 	useUnifiedTopology: true,
 	useNewUrlParser: true
 });
-// mongoose.set('useUnifiedTopology', true);
-// mongoose.set('useNewUrlParser', true);
-
-// ***********************************************************************************
-// Connect to Mongodb Atlas (cloud database)
-// ***********************************************************************************
-
-// mongoose.connect("code provided by the clode database", {
-// 	useNewUrlParser: true,
-// 	useUnifiedTopology: true
-// });
-
 
 // ***********************************************************************************
 // Create data manually
