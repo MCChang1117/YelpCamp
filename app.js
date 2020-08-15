@@ -20,27 +20,42 @@ var commentRoutes 		= require("./routes/comments"),
 	indexRoutes 		= require("./routes/index");
 
 // seedDB(); // seed the database
-// mongoose.connect("mongodb://localhost/yelp_camp"); > local database
-mongoose.set('useUnifiedTopology', true);
-mongoose.set('useNewUrlParser', true);
-mongoose.connect("mongodb+srv://maple147259:password12345678@cluster0.syj50.mongodb.net/YelpCamp?retryWrites=true&w=majority");
+mongoose.connect("process.env.DATABASEURL", {
+	useNewUrlParser: true,
+ 	useUnifiedTopology: true
+});
+// mongoose.set('useUnifiedTopology', true);
+// mongoose.set('useNewUrlParser', true);
 
+// ***********************************************************************************
+// Connect to Mongodb Atlas (cloud database)
+// ***********************************************************************************
 
+// mongoose.connect("code provided by the clode database", {
+// 	useNewUrlParser: true,
+// 	useUnifiedTopology: true
+// });
 
-/*Campground.create(
-	{
-		name: "Taichung", 
-		image: "https://source.unsplash.com/2400x1600/?camp",
-		description: "It's in the middle of Taiwan"
-	}, function(err, campground){
-		if(err){
-			console.log(err);
-		} else {
-			console.log("NEWLY CREATED CAMPGROUND: ");
-			console.log(campground);
-		}
-	});*/
+// ***********************************************************************************
+// Create data manually
+// ***********************************************************************************
 
+// Originally, These codes are used to create the sample data in campground
+
+// Campground.create(
+// 	{
+// 		name: "Taichung", 
+// 		image: "https://source.unsplash.com/2400x1600/?camp",
+// 		description: "It's in the middle of Taiwan"
+// 	}, function(err, campground){
+// 		if(err){
+// 			console.log(err);
+// 		} else {
+// 			console.log("NEWLY CREATED CAMPGROUND: ");
+// 			console.log(campground);
+// 		}
+// 	});
+// ***********************************************************************************
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -50,18 +65,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride("_method"));
 app.use(flash());
 
-/*var campgrounds = [
-	{name: "Taipei", image: "https://source.unsplash.com/1600x900/?camp"},
-	{name: "Taichung", image: "https://source.unsplash.com/2400x1600/?camp"},
-	{name: "Hsinchu", image: "https://source.unsplash.com/1920x1458/?camp"}, 
-	{name: "Tainan", image: "https://source.unsplash.com/1600x900/?night"}, 
-	{name: "Kaoshung", image: "https://source.unsplash.com/daily"}, 
-	{name: "Taoyuan", image: "https://source.unsplash.com/user/scottagoodwill"}, 
-	{name: "Taitung", image: "https://source.unsplash.com/1920x1280/?camp"}, 
-	{name: "New Taipei", image: "https://source.unsplash.com/1600x900/?tent"},
-	{name: "E.SUN", image: "https://source.unsplash.com/1600x900/?mountain"}
-];
-*/
+// ***********************************************************************************
+// Image URL
+// ***********************************************************************************
+
+// All images are exported from unsplash
+
+// var campgrounds = [
+// 	{name: "Taipei", image: "https://source.unsplash.com/1600x900/?camp"},
+// 	{name: "Taichung", image: "https://source.unsplash.com/2400x1600/?camp"},
+// 	{name: "Hsinchu", image: "https://source.unsplash.com/1920x1458/?camp"}, 
+// 	{name: "Tainan", image: "https://source.unsplash.com/1600x900/?night"}, 
+// 	{name: "Kaoshung", image: "https://source.unsplash.com/daily"}, 
+// 	{name: "Taoyuan", image: "https://source.unsplash.com/user/scottagoodwill"}, 
+// 	{name: "Taitung", image: "https://source.unsplash.com/1920x1280/?camp"}, 
+// 	{name: "New Taipei", image: "https://source.unsplash.com/1600x900/?tent"},
+// 	{name: "E.SUN", image: "https://source.unsplash.com/1600x900/?mountain"}
+// ];
+
+// ***********************************************************************************
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
