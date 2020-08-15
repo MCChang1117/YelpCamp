@@ -42,7 +42,7 @@ From now on, you just need to click "Alt+m" to preview markdown in web browser
 ### Create the main javascript file and install all required packages
 
 	touch app.js
-	npm install --save express ejs body-parser request mongoose method-override express-sanitizer passport passport-local passport-local-mongoose express-session connect-flash
+	npm install --save express ejs body-parser request mongoose method-override express-sanitizer passport passport-local passport-local-mongoose express-session connect-flash moment
 
 #### Package Description
 
@@ -106,6 +106,11 @@ From now on, you just need to click "Alt+m" to preview markdown in web browser
 ### connect-flash setting
 
 	app.use(flash());
+
+### moment setting
+
+	app.locals.moment = require("moment");
+* Right above the passport configuration code
 
 ### Passport Configuration
 
