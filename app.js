@@ -20,9 +20,11 @@ var commentRoutes 		= require("./routes/comments"),
 	indexRoutes 		= require("./routes/index");
 
 // seedDB(); // seed the database
-mongoose.connect("process.env.DATABASEURL", {
-	useNewUrlParser: true,
- 	useUnifiedTopology: true
+
+mongoose.connect(process.env.DATABASEURL, {
+	// The following codes are used to solve DeprecationWarning issue
+	useUnifiedTopology: true,
+	useNewUrlParser: true
 });
 // mongoose.set('useUnifiedTopology', true);
 // mongoose.set('useNewUrlParser', true);
@@ -35,6 +37,7 @@ mongoose.connect("process.env.DATABASEURL", {
 // 	useNewUrlParser: true,
 // 	useUnifiedTopology: true
 // });
+
 
 // ***********************************************************************************
 // Create data manually
