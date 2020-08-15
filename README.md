@@ -42,7 +42,7 @@ From now on, you just need to click "Alt+m" to preview markdown in web browser
 ### Create the main javascript file and install all required packages
 
 	touch app.js
-	npm install --save express ejs body-parser request mongoose method-override express-sanitizer passport passport-local passport-local-mongoose express-session connect-flash moment
+	npm install --save express ejs body-parser request mongoose method-override express-sanitizer passport passport-local passport-local-mongoose express-session connect-flash moment locus
 
 #### Package Description
 
@@ -54,6 +54,8 @@ From now on, you just need to click "Alt+m" to preview markdown in web browser
 	* a way to separete different RESTful ROUTE out
 * express-sanitizer: Sanitize the input
 	* e.g. Avoid the input of script "Alert"
+* moment: Record the post time
+* locus: Stop the code for developers to check
 	
 ### Open the database
 
@@ -296,3 +298,11 @@ SHOW 	| /dogs/:id 	| GET 	| Shows info about one dog
 
 * =: Just display the string
 * -: Evaluate and run the return as the code
+
+## Stop the code (the use of locus)
+
+	eval(require("locus"))
+
+* Write the above code to where you would like to stop and check, then type `node app.js` in cmd
+	* You CAN NOT type `nodemon` in cmd
+* After the system stops successfully, you could type the variable that you need to check in cmd, and then the cmd would show its value

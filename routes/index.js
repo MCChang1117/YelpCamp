@@ -21,13 +21,17 @@ router.get("/register", function(req, res){
 
 router.post("/register", function(req, res){
 	var newUser = new User({username: req.body.username});
+	// eval(require("locus")) // Stop the code, so developer could take a look
+	if(req.body.adminCode === 'secretCode') {
+		newUser.isAdmin = true;
+	}
 	User.register(newUser, req.body.password, function(err, user){
 		if(err){
 		    console.log(err);
 		    return res.render("register", {error: err.message});
 		}
 		passport.authenticate("local")(req, res, function(){
-			req.flash("success", "Welcome to YelpCamp " + user.username);
+			req.flash("success", "Successfully Signed Up! Nice to meet you " + user.username);
 			res.redirect("/campgrounds");
 		});
 	});
