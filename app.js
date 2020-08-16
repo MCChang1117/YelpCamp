@@ -12,8 +12,10 @@ var express   		= require("express"),
 	User 			= require("./models/user"),
 	seedDB 			= require("./seed");
 
-const PORT = process.env.PORT || 3000
-var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp"
+require('dotenv').config();
+
+var PORT 	= process.env.PORT;
+var url 	= process.env.DATABASEURL;
 
 // requiring routes
 var commentRoutes 		= require("./routes/comments"),
@@ -21,11 +23,11 @@ var commentRoutes 		= require("./routes/comments"),
 	indexRoutes 		= require("./routes/index");
 
 // seedDB(); // seed the database
-
 mongoose.connect(url, {
 	// The following codes are used to solve DeprecationWarning issue
 	useUnifiedTopology: true,
-	useNewUrlParser: true
+	useNewUrlParser: true,
+	useCreateIndex: true
 });
 
 // ***********************************************************************************

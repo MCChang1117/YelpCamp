@@ -42,7 +42,7 @@ From now on, you just need to click "Alt+m" to preview markdown in web browser
 ### Create the main javascript file and install all required packages
 
 	touch app.js
-	npm install --save express ejs body-parser request mongoose method-override express-sanitizer passport passport-local passport-local-mongoose express-session connect-flash moment locus
+	npm install --save express ejs body-parser request mongoose method-override express-sanitizer passport passport-local passport-local-mongoose express-session connect-flash moment locus async nodemailer dotenv
 
 #### Package Description
 
@@ -56,6 +56,8 @@ From now on, you just need to click "Alt+m" to preview markdown in web browser
 	* e.g. Avoid the input of script "Alert"
 * moment: Record the post time
 * locus: Stop the code for developers to check
+* nodemailer: Allow us to send email
+* dotenv: Load environment variables form a `.env` file into `process.env`
 	
 ### Open the database
 
@@ -77,6 +79,15 @@ From now on, you just need to click "Alt+m" to preview markdown in web browser
 	var methodOverride 	= require("method-override");
 	var passport 		= require("passport"),
 	var LocalStrategy 	= require("passport-local"),
+
+### dotenv setting
+
+	require('dotenv').config();
+
+* create `.env` file in your root folder
+	* type the value of environment variables in this file
+	* DO NOT commit this file
+* add `useCreateIndex: true` to `mongoose.connect` in order to avoid deprecation warning
 
 ### Body Parser setting
 
@@ -306,3 +317,16 @@ SHOW 	| /dogs/:id 	| GET 	| Shows info about one dog
 * Write the above code to where you would like to stop and check, then type `node app.js` in cmd
 	* You CAN NOT type `nodemon` in cmd
 * After the system stops successfully, you could type the variable that you need to check in cmd, and then the cmd would show its value
+
+## nodemailer for secure gmail
+
+### using two-step verification
+1. Navigate to the following [address](https://security.google.com/settings/security/apppasswords)
+2. In 'select app' choose 'custom', give it an name and press generate
+3. It will give you 16 chars token, and use it as the password in this project.
+5. [Reference](https://stackoverflow.com/questions/26736062/sending-email-fails-when-two-factor-authentication-is-on-for-gmail)
+
+### not using two-step verification
+1. Navigate to the following [address](https://myaccount.google.com/lesssecureapps)
+2. Allow less secure apps to ON
+3. Use the original password in your google account.
