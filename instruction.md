@@ -1,10 +1,10 @@
-# Before you start
-
-If you have not set "nodemon" before, please see "setup_automate_server_restart.txt" and follow the instruction
-
 # Previous Environment Setting
 
 ## Git
+
+Navigate to the following website to download Git: https://git-scm.com/download/win
+
+While downloading, check if git bash is downloaded successfully.
 
 ## Sublime Text 3
 
@@ -36,6 +36,13 @@ From now on, you just need to click "Alt+m" to preview markdown in web browser
 
 * Set entry point to app.js (preference)
 * Other variables use the default
+
+### Download nodemon package
+
+	npm i -g nodemon
+
+* With nodemon package, the server will restart automatically after saving files. 
+* You only need to enter `nodemon` at the first time rather than enter `node app.js` when you revise the files.
 
 ### Create the main javascript file and install all required packages
 
@@ -245,6 +252,14 @@ From now on, you just need to click "Alt+m" to preview markdown in web browser
 		});
 
 # Deploying Setting (Heroku)
+
+## Connect to the project
+
+
+
+## Change domain name
+
+
 
 # Notes
 
