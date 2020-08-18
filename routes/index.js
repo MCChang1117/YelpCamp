@@ -13,6 +13,7 @@ require('dotenv').config();
 const resetPasswordTime = 3600000;
 var sendEmail 	= process.env.SENDEMAIL;
 var gmailPW 	= process.env.GMAILPW;
+var adminCode 	= process.env.ADMINCODE;
 
 router.get("/", function(req, res){
 	res.render("landing");
@@ -38,7 +39,7 @@ router.post("/register", function(req, res){
 		avatar: req.body.avatar
 	});
 	// eval(require("locus")) // Stop the code, so developer could take a look
-	if(req.body.adminCode === 'secretCode') {
+	if(req.body.adminCode === adminCode) {
 		newUser.isAdmin = true;
 	}
 	User.register(newUser, req.body.password, function(err, user){
@@ -143,7 +144,7 @@ router.post("/forgot", function(req, res, next){
 			
 			smtpTransport.sendMail(mailOptions, function(err){
 				console.log('mail sent');
-				req.flash('success', 'An e-mail has been sent to ' + user.email + 'with further instructions.');
+				req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
 				done(err, 'done');
 			});
 		}
