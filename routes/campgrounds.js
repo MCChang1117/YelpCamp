@@ -7,13 +7,30 @@ var middleware 	= require("../middleware");
 // INDEX - Show all campgrounds
 router.get("/", function(req, res){
 	// Get all campgrounds from DB
-	Campground.find({}, function(err, allCampgrounds){
-		if(err){
-			console.log(err);
-		} else {
-			res.render("campgrounds/index", {campgrounds: allCampgrounds, page: "campgrounds"});
-		}
-	});
+	var noMatch = null;
+	if (req.query.search) {
+		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+		Campground.find({name: regex}, function(err, allCampgrounds){
+			if(err){
+				console.log(err);
+			} else {
+				if(allCampgrounds.length < 1){
+					noMatch = 'No campgrounds match "' + req.query.search + '", please try again.';					
+				} else {
+					noMatch = 'Campgrounds match "' + req.query.search + '" :';
+				}
+				res.render("campgrounds/index", {campgrounds: allCampgrounds, noMatch: noMatch, page: "campgrounds"});
+			}
+		});
+	} else {
+		Campground.find({}, function(err, allCampgrounds){
+			if(err){
+				console.log(err);
+			} else {
+				res.render("campgrounds/index", {campgrounds: allCampgrounds, noMatch: noMatch, page: "campgrounds"});
+			}
+		});
+	}	
 });
 
 // Use the same URL "/campgrounds" is fine since get and post are different > Convention
@@ -91,5 +108,9 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res){
 		}
 	})
 })
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 module.exports = router;
