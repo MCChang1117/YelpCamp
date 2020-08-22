@@ -47,7 +47,7 @@ From now on, you just need to click "Alt+m" to preview markdown in web browser
 ### Create the main javascript file and install all required packages
 
 	touch app.js
-	npm install --save express ejs body-parser request mongoose method-override express-sanitizer passport passport-local passport-local-mongoose express-session connect-flash moment locus async nodemailer dotenv
+	npm install --save express ejs body-parser request mongoose method-override express-sanitizer passport passport-local passport-local-mongoose express-session connect-flash moment locus async nodemailer dotenv multer cloudinary
 
 #### Package Description
 
