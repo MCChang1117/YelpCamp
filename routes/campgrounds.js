@@ -31,29 +31,49 @@ cloudinary.config({
 // INDEX - Show all campgrounds
 router.get("/", function(req, res){
 	// Get all campgrounds from DB
+	var perPage = 8;
+	var pageQuery = parseInt(req.query.page);
+	var pageNumber = pageQuery ? pageQuery : 1;
 	var matchResult = null;
 	if (req.query.search) {
 		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-		Campground.find({name: regex}, function(err, allCampgrounds){
-			if(err){
-				console.log(err);
-			} else {
-				if(allCampgrounds.length < 1){
-					matchResult = 'No campgrounds match "' + req.query.search + '", please try again.';					
+		Campground.find({name: regex}).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function (err, allCampgrounds) {
+            Campground.countDocuments({name: regex}).exec(function (err, count) {
+				if(err){
+					console.log(err);
+					res.redirect('back');
 				} else {
-					matchResult = 'Campgrounds match "' + req.query.search + '" :';
+					if(allCampgrounds.length < 1){
+						matchResult = 'No campgrounds match "' + req.query.search + '", please try again.';					
+					} else {
+						matchResult = 'Campgrounds match "' + req.query.search + '" :';
+					}
+					res.render("campgrounds/index", {
+						campgrounds: allCampgrounds, 
+						matchResult: matchResult,
+						current: pageNumber, 
+						pages: Math.ceil(count / perPage),
+						search: req.query.search
+					});
 				}
-				res.render("campgrounds/index", {campgrounds: allCampgrounds, matchResult: matchResult, page: "campgrounds"});
-			}
+			});
 		});
 	} else {
-		Campground.find({}, function(err, allCampgrounds){
-			if(err){
-				console.log(err);
-			} else {
-				res.render("campgrounds/index", {campgrounds: allCampgrounds, matchResult: matchResult, page: "campgrounds"});
-			}
-		});
+		Campground.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function (err, allCampgrounds) {
+            Campground.countDocuments().exec(function (err, count) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.render("campgrounds/index", {
+                        campgrounds: allCampgrounds,
+                        current: pageNumber,
+                        pages: Math.ceil(count / perPage),
+                        matchResult: matchResult,
+                        search: false
+                    });
+                }
+            });
+        });
 	}	
 });
 

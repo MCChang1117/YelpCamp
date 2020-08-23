@@ -64,7 +64,9 @@ router.get("/login", function(req, res){
 router.post("/login", passport.authenticate("local",
 	{
 		successRedirect: "/campgrounds",
-		failureRedirect: "/login"
+		failureRedirect: "/login",
+		successFlash: 'Hey, welcome back',
+		failureFlash: true
 	}), function(req, res){
 });
 
@@ -79,12 +81,12 @@ router.get("/logout", function(req, res){
 router.get("/users/:id", function(req, res){
 	User.findById(req.params.id, function(err, foundUser){
 		if(err){
-			req.flash("error", "Something wet wrong.");
+			req.flash("error", err.message);
 			res.redirect("/");
 		} else {
 			Campground.find().where('author.id').equals(foundUser._id).exec(function(err, campgrounds){
 				if(err){
-					req.flash("error", "Something wet wrong.");
+					req.flash("error", err.message);
 					res.redirect("/");
 				} else {
 					res.render("users/show", {user: foundUser, campgrounds: campgrounds});
